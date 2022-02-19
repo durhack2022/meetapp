@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-
-import Map from "./Map";
+import { Map } from "./Map";
 
 const Body = ({
     apiKey,
@@ -10,8 +9,8 @@ const Body = ({
     let [markers, setMarkers] = useState([]);
 
     let onMapClick = event => {
-        let { lat, lng } = event;
-        setMarkers(markers.concat({lat, lng}));
+        let { lat, lng } = event;        
+        setMarkers((markers) =>  [...markers, {lat, lng}])
     };
   
     return (
@@ -21,3 +20,5 @@ const Body = ({
             points={markers}
         /> );
 };
+
+export { Body };
