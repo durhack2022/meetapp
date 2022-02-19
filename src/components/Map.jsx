@@ -12,6 +12,14 @@ const getLocation = callback => {
 
 };
 
+const Marker = props => {
+    return (
+        <div style={{backgroundColor: "black", color: "white"}}>
+            !
+        </div>
+    )
+}
+
 class Map extends React.Component {
     constructor(props) {
         super(props);
@@ -25,6 +33,8 @@ class Map extends React.Component {
         this.mapURL = props.mapURL;
         this.onClick = props.onClick;
         this.points = props.points;
+
+        console.log("points:", this.points);
 
         this.map = null;
     }
@@ -84,33 +94,5 @@ class Map extends React.Component {
         );
     }
 }
-
-/*
-const Map = ({
-    apiKey,
-    styleUrl,
-    onClick,
-    ...options
-}) => {
-    const [userLoc, setUserLoc] = useState({ lat: 54.776, lng: -1.5753 });
-    const [mapRef, setMap] = useState(null);
-
-    getLocation(location => {
-
-    });
-
-    return (
-        <div style={{ height: "100vh", width: "100%" }}>
-            <GoogleMapReact
-                bootstrapURLKeys={{key: apiKey}}
-                defaultCenter={userLoc}
-                defaultZoom={mapSettings.zoom}
-                onClick={onClick}
-            >
-            </GoogleMapReact>
-        </div>
-    );
-};
-*/
 
 export { Map };
