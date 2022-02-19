@@ -11,6 +11,10 @@
 # production
 /build
 
+# api keys
+# this is insecure, they should go on the backend
+.env
+
 # misc
 .DS_Store
 .env.local
