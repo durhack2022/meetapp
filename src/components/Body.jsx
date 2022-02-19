@@ -9,10 +9,8 @@ const Body = ({
     let [markers, setMarkers] = useState([]);
 
     let onMapClick = event => {
-        let { lat, lng } = event;
-        let newMarkers = [...markers, {lat, lng}]; 
-        console.log("onmapclick", newMarkers);
-        setMarkers(newMarkers);
+        let { lat, lng } = event;        
+        setMarkers((markers) =>  [...markers, {lat, lng}])
     };
   
     return (

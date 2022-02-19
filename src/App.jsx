@@ -15,7 +15,7 @@ const base_style = {
 
 const App = () => {
   return (
-    <ChakraProvider>                      {/* set up chakra UI            */}
+    <ChakraProvider>
         <div style={base_style}>
           <Body apiKey={MAP_API_KEY} styleUrl={MAP_STYLE_URL} />
         </div>

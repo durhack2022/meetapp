@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
 import GoogleMapReact from "google-map-react";
 
@@ -12,87 +12,65 @@ const getLocation = callback => {
 
 };
 
+const markerStyle = {
+    backgroundColor: "black",
+    color: "white",
+    width: "10px",
+    height: "10px",
+};
+
 const Marker = props => {
     return (
-        <div style={{backgroundColor: "black", color: "white"}}>
+        <div style={markerStyle}>
             !
         </div>
     )
 }
 
-class Map extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            center: { lat: 54.776, lng: -1.5753 },
-            zoom: 16,
-        }
+const Map = ({ apiKey, styleUrl, onClick, points }) => {
+    const map = useRef();
 
-        this.apiKey = props.apiKey;
-        this.mapURL = props.mapURL;
-        this.onClick = props.onClick;
-        this.points = props.points;
+    const [mapPos, setMapPos] = useState({
+        center: { lat: 54.776, lng: -1.5753 },
+        zoom: 16,
+    });
 
-        console.log("points:", this.points);
-
-        this.map = null;
-    }
-
-    apiIsLoaded(map, maps) {
-        if (map) {
-            this.map = map;
-
-            let newState = this.state;
+    const apiIsLoaded = newMap => {
+        if (newMap) {
+            map.current = newMap;
 
             getLocation(loc => {
-                newState.center = loc;
-                this.setState(newState);
+                let newPos = mapPos;
+                newPos.center = loc;
+                setMapPos(newPos);
     
-                if (this.map) {
-                    this.map.panTo(
-                        new window.google.maps.LatLng(newState.center.lat, newState.center.lng)
+                if (newMap) {
+                    newMap.panTo(
+                        new window.google.maps.LatLng(newPos.center.lat, newPos.center.lng)
                     );
                 }
             });
 
-        } 
-    }
+        }
+    };
 
-    componentDidMount() {
-        let newState = this.state;
 
-        getLocation(loc => {
-            newState.center = loc;
-            this.setState(newState);
-
-            if (this.map) {
-                this.map.panTo(
-                    new window.google.maps.LatLng(newState.center.lat, newState.center.lng)
-                );
-            }
-        });
-    }
-
-    componentDidUpdate(oldProps) {
-        console.log("new points:", this.points);
-    }
-
-    render() {
-        return (
-            <div style={{ height: "100vh", width: "100%" }}>
-                <GoogleMapReact
-                    bootstrapURLKeys={{key: this.apiKey}}
-                    defaultCenter={this.state.center}
-                    defaultZoom={this.state.zoom}
-                    onClick={this.onClick}
-                    yesIWantToUseGoogleMapApiInternals={true}
-                    onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
-                >
-                </GoogleMapReact>
-            </div>
-        );
-    }
+    return (
+        <div style={{ height: "100vh", width: "100%" }}>
+            <GoogleMapReact
+                bootstrapURLKeys={{key: apiKey}}
+                defaultCenter={mapPos.center}
+                defaultZoom={mapPos.zoom}
+                onClick={onClick}
+                yesIWantToUseGoogleMapApiInternals={true}
+                onGoogleApiLoaded={({ map }) => apiIsLoaded(map)}
+            >
+                {points.map((point, i) => 
+                    <Marker key={i} lat={point.lat} lng={point.lng}/>)
+                }
+            </GoogleMapReact>
+        </div>
+    );;
 }
 
 export { Map };
