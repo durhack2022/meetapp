@@ -16,8 +16,6 @@ const base_style = {
 let onMapClick = event => {
   let { lat, lng } = event;
   console.log(`clicked at lat: ${lat} lng: ${lng}`);
-
-  console.log("clicked:", event);
 };
 
 const App = () => {

@@ -1,20 +1,11 @@
 import React from "react";
-import { useState } from "react";
 
 import GoogleMapReact from "google-map-react";
 
-const mapSettings = {
-    center: { lat: 54.776, lng: -1.5753 },
-    zoom: 8,
-};
-
 const getLocation = callback => {
-    console.log("called getlocation")
-
-    return navigator.geolocation.getCurrentPosition(pos => {
+    navigator.geolocation.getCurrentPosition(pos => {
         let lat = pos.coords.latitude;
         let lng = pos.coords.longitude;
-        console.log("found location:", pos);
 
         callback({ lat, lng });
     });
@@ -33,19 +24,50 @@ class Map extends React.Component {
         this.apiKey = props.apiKey;
         this.mapURL = props.mapURL;
         this.onClick = props.onClick;
+        this.points = props.points;
+
+        this.map = null;
+    }
+
+    apiIsLoaded(map, maps) {
+        if (map) {
+            this.map = map;
+
+            let newState = this.state;
+
+            getLocation(loc => {
+                newState.center = loc;
+                this.setState(newState);
+    
+                if (this.map) {
+                    this.map.panTo(
+                        new window.google.maps.LatLng(newState.center.lat, newState.center.lng)
+                    );
+                }
+            });
+
+        } 
     }
 
     componentDidMount() {
-        console.log("component did mount");
         let newState = this.state;
 
         getLocation(loc => {
-            console.log("got user location:", loc);
             newState.center = loc;
             this.setState(newState);
+
+            if (this.map) {
+                this.map.panTo(
+                    new window.google.maps.LatLng(newState.center.lat, newState.center.lng)
+                );
+            }
         });
     }
-    
+
+    componentDidUpdate(oldProps) {
+        console.log("new points:", this.points);
+    }
+
     render() {
         return (
             <div style={{ height: "100vh", width: "100%" }}>
@@ -54,6 +76,8 @@ class Map extends React.Component {
                     defaultCenter={this.state.center}
                     defaultZoom={this.state.zoom}
                     onClick={this.onClick}
+                    yesIWantToUseGoogleMapApiInternals={true}
+                    onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
                 >
                 </GoogleMapReact>
             </div>
