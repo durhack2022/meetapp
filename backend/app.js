@@ -73,6 +73,9 @@ async function GetDistancesToPlaces(type,lat,lng,originList,mode){
 
     let radius=1000;
     let body=await GetNearbyPlaces(type,lat,lng,radius);
+    if (body.length===0){
+        return null
+    }
     let jsonPlaces=filterPlaces(body,5);
 
     let placesCoordinates=[];
@@ -119,7 +122,9 @@ app.get('/getDistancesToPlaces', async(req,res)=>{
 async function GetOptimal(type,centroidLat,centroidLng,mode){
     
     let body=await GetDistancesToPlaces(type,centroidLat,centroidLng,originsList,mode);
-
+    if (!body){
+        return null
+    }
     let sumDistance=[]
     let sumDuration=[]
     for (let origin of body[0]){
@@ -138,18 +143,23 @@ async function GetOptimal(type,centroidLat,centroidLng,mode){
             sumDuration[i].sum+=parseInt(origin[i].duration)
         }
     }
-    // console.log(sumDistance)
-    // console.log(sumDuration)
-    // // let indexOfSmallestDistance=sumDistance.indexOf(Math.min.apply(Math, sumDistance))
-    // // let indexOfSmallestDuration=sumDuration.indexOf(Math.min.apply(Math, sumDuration))
-    
-    // console.log(sumDistance.sort((a,b) =>  a.sum-b.sum))
-    // console.log(sumDuration.sort((a,b) =>  a.sum-b.sum))
 
     return [sumDistance.sort((a,b) =>  a.sum-b.sum),sumDuration.sort((a,b) =>  a.sum-b.sum)]
 
 }
 
+function GetCentroid(userCoordinates){
+
+    let sumLat=0;
+    let sumLong=0;
+    for (let coordinate in userCoordinates){
+      sumLat+=coordinate[0];
+      sumLong+=coordinate[1];
+    }
+    let avgLat=sumLat/(userCoordinates.length);
+    let avgLong=sumLong/(userCoordinates.length);
+    return (avgLat,avgLong);
+}
 
 app.get('/getOptimalPlaces', async(req,res)=>{
     let type=req.query.type;
@@ -163,8 +173,12 @@ app.get('/getOptimalPlaces', async(req,res)=>{
         let lng=parseFloat(origin.split(",")[1])
         originsList.push([lat,lng])
     }
-    
-    let body=await GetOptimal(type,lat,lng,originsList,mode);
+
+    let centroid=GetCentroid(originsList);
+    let body=await GetOptimal(type,centroid[0],centroid[1],originsList,mode);
+    if (!body){
+        res.send("No results")
+    }
     res.send(body);
     
 })
