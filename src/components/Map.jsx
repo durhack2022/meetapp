@@ -2,7 +2,10 @@ import React, { useRef, useState } from "react";
 
 import GoogleMapReact from "google-map-react";
 
+import "./spin.css";
+
 const MARKER_IMG = require("../assets/person_better.png");
+
 const RED_MARKER_IMG = require("../assets/RedMarker.png");
 const YELLOW_MARKER_IMG = require("../assets/YellowMarker.png");
 const BLUE_MARKER_IMG = require("../assets/BlueMarker.png");
@@ -19,9 +22,10 @@ const getLocation = callback => {
 
 const Marker = props => {
     let width = props.largePerson ? "min(6vh,6vw)" : "min(3vh,5vw)";
+    let spin = props.spinPerson ? "spin 4s linear infinite" : "";
 
     return (
-        <img src={MARKER_IMG} style={{ width }} alt={"marker"}/>
+        <img src={MARKER_IMG} style={{ width: width, animation: spin }} alt={"marker"}/>
     );
 }
 
@@ -81,7 +85,7 @@ const mapOptions = [
     }
   ];
 
-const Map = ({ apiKey, styleURL, onClick, largePerson, points, results }) => {
+const Map = ({ apiKey, styleURL, onClick, largePerson, spinPerson, points, results }) => {
     const map = useRef();
 
     const [mapPos, setMapPos] = useState({
@@ -124,7 +128,7 @@ const Map = ({ apiKey, styleURL, onClick, largePerson, points, results }) => {
                 }
 
                 {points.map((point, i) => 
-                    <Marker key={i} lat={point.lat} lng={point.lng} zoom={map.current.zoom} largePerson={largePerson}/>)
+                    <Marker key={i} lat={point.lat} lng={point.lng} zoom={map.current.zoom} largePerson={largePerson} spinPerson={spinPerson}/>)
                 }
 
                 <UserMarker lat={mapPos.center.lat} lng={mapPos.center.lng}/>

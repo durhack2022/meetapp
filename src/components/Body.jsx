@@ -20,12 +20,17 @@ const Body = ({
 }) => {
     let [markers, setMarkers] = useState([]);
     let [places, setPlaces] = useState([]);
-    const [personLarge, setPersonLarge] = useState(false);
+
+    let [personLarge, setPersonLarge] = useState(false);
+    let [personSpin, setPersonSpin] = useState(false);
 
     let onToggle = () => {
-        console.log("called onToggle");
         setPersonLarge(!personLarge);
     };
+
+    let onToggleSpin = () => {
+        setPersonSpin(!personSpin);
+    }
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -45,8 +50,6 @@ const Body = ({
         const url = buildURL(searchTerm, "walking", markers);
         const res = await fetch(url);
         const body = await res.json();
-
-        console.log("result:", body[0]);
 
         setPlaces(body[0]);
     };
@@ -72,6 +75,7 @@ const Body = ({
                         points={markers}
                         results={places}
                         largePerson={personLarge}
+                        spinPerson={personSpin}
                     />    
                 </GridItem>
                 <GridItem colSpan={2}>
@@ -79,6 +83,7 @@ const Body = ({
                         onSubmit={handleSubmit}
                         onClearMarkers={handleClearMarkers}
                         onToggle={onToggle}
+                        onToggleSpin={onToggleSpin}
                         placeResults={places}
                     />
                 </GridItem>

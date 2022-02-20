@@ -46,6 +46,17 @@ const LargePersonToggle = ({ onToggle }) => {
     );
 };
 
+const SpinPersonToggle = ({ onToggleSpin }) => {
+    return (
+        <FormControl display="flex" alignItems="center">
+            <FormLabel html-for="spin-person">
+                Toggle SMM (WARNING)
+            </FormLabel>
+            <Switch id="spin-person" onChange={onToggleSpin}/>
+        </FormControl>
+    );
+};
+
 const ResultList = ({ items }) => {
     return (
         <div overflow="scroll">
@@ -64,7 +75,7 @@ const ResultList = ({ items }) => {
     );
 };
 
-const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers, onToggle }) => {
+const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers, onToggle, onToggleSpin }) => {
     return (
         <Container padding={5}>
             <SearchInput placeholder={placeholder} onSubmit={onSubmit} />
@@ -75,7 +86,10 @@ const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers, onToggle
                 </Box>
                 <Spacer />
                 <Box marginTop={"1vh"}>
-                    <LargePersonToggle onToggle={onToggle} />
+                    <>
+                        <LargePersonToggle onToggle={onToggle} />
+                        <SpinPersonToggle onToggleSpin={onToggleSpin} />
+                    </>
                 </Box>
             </Flex>
             <LineSpacer padding={"20px"}/>
