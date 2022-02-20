@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 
 import GoogleMapReact from "google-map-react";
+// import { Icon } from '@iconify/react'
+// import locationIcon from '@iconify/icons-mdi/map-marker'
+
+
+const MARKER_IMG = require("../assets/marker2.png");
 
 const getLocation = callback => {
     navigator.geolocation.getCurrentPosition(pos => {
@@ -12,22 +17,43 @@ const getLocation = callback => {
 
 };
 
-const markerStyle = {
-    backgroundColor: "black",
-    color: "white",
-    width: "10px",
-    height: "10px",
-};
-
 const Marker = props => {
     return (
-        <div style={markerStyle}>
-            !
-        </div>
-    )
+        <img src={MARKER_IMG} style={{width: "20px", height: "20px"}} alt={"marker"}/>
+    );
 }
 
-const Map = ({ apiKey, styleUrl, onClick, points }) => {
+const mapOptions = [
+    {
+      "featureType": "administrative.land_parcel",
+      "elementType": "labels",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    }
+  ];
+
+const Map = ({ apiKey, styleURL, onClick, points }) => {
     const map = useRef();
 
     const [mapPos, setMapPos] = useState({
@@ -50,7 +76,6 @@ const Map = ({ apiKey, styleUrl, onClick, points }) => {
                     );
                 }
             });
-
         }
     };
 
@@ -64,9 +89,10 @@ const Map = ({ apiKey, styleUrl, onClick, points }) => {
                 onClick={onClick}
                 yesIWantToUseGoogleMapApiInternals={true}
                 onGoogleApiLoaded={({ map }) => apiIsLoaded(map)}
+                options={mapOptions}
             >
                 {points.map((point, i) => 
-                    <Marker key={i} lat={point.lat} lng={point.lng}/>)
+                    <Marker key={i} lat={point.lat} lng={point.lng} zoom={map.current.zoom}/>)
                 }
             </GoogleMapReact>
         </div>
