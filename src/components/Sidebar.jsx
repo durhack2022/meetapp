@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Container, Input, Button, Spacer, VStack } from '@chakra-ui/react';
+import { Box, Container, Input, Button, Spacer, VStack, Switch, FormLabel, FormControl, Flex } from '@chakra-ui/react';
 
 import { PlaceCard } from "./PlaceCard";
 import { LineSpacer } from './LineSpacer';
@@ -27,8 +27,18 @@ const ClearMarkersButton = ({ onPress }) => {
     );
 };
 
+const LargePersonToggle = ({ onToggle }) => {
+    return (
+        <FormControl display="flex" alignItems="center">
+            <FormLabel html-for="large-person">
+                Toggle large person
+            </FormLabel>
+            <Switch id="large-person" onChange={onToggle}/>
+        </FormControl>
+    );
+};
+
 const ResultList = ({ items }) => {
-    console.log("items", items);
     return (
         <div overflow="scroll">
             <VStack>
@@ -36,6 +46,7 @@ const ResultList = ({ items }) => {
                     return <PlaceCard key={i}
                                 name={item["name"]}
                                 rating={item["rating"]}
+                                numRatings={item["user_ratings_total"]}
                                 url={item["page_url"]}
                                 rank={i}
                             />
@@ -45,17 +56,20 @@ const ResultList = ({ items }) => {
     );
 };
 
-const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers }) => {
+const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers, onToggle }) => {
     return (
         <Container padding={5}>
             <SearchInput placeholder={placeholder} onSubmit={onSubmit} />
             <Spacer height={"10px"}/>
-            <ClearMarkersButton onPress={onClearMarkers} 
-                style={{
-                    position: "absolute",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}/>
+            <Flex>
+                <Box>
+                    <ClearMarkersButton onPress={onClearMarkers} />
+                </Box>
+                <Spacer />
+                <Box marginTop={"1vh"}>
+                    <LargePersonToggle onToggle={onToggle} />
+                </Box>
+            </Flex>
             <LineSpacer padding={"20px"}/>
             <ResultList items={placeResults}/>
         </Container>);

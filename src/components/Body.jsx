@@ -20,6 +20,12 @@ const Body = ({
 }) => {
     let [markers, setMarkers] = useState([]);
     let [places, setPlaces] = useState([]);
+    const [personLarge, setPersonLarge] = useState(false);
+
+    let onToggle = () => {
+        console.log("called onToggle");
+        setPersonLarge(!personLarge);
+    };
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -65,12 +71,14 @@ const Body = ({
                         onClick={onMapClick}
                         points={markers}
                         results={places}
+                        largePerson={personLarge}
                     />    
                 </GridItem>
                 <GridItem colSpan={2}>
                     <Sidebar placeholder={"Where do you want to go?"} 
                         onSubmit={handleSubmit}
                         onClearMarkers={handleClearMarkers}
+                        onToggle={onToggle}
                         placeResults={places}
                     />
                 </GridItem>

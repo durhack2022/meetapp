@@ -12,16 +12,18 @@ const Name = ({ name }) => {
     );
 };
 
-const Rating = ({ score }) => {
+const Rating = ({ score, numRatings }) => {
+    let nRatingsText = (numRatings ? ", " + numRatings  + " reviews": "");
+
     return (
         <Box>
-            <Text as={"i"}>{score + "⭐"|| "no ratings"}</Text>
+            <Text as={"i"}>{score ? score + "⭐" + nRatingsText : "no ratings"}</Text>
         </Box>
     );
 };
 
 // https://chakra-ui.com/docs/layout/box
-const PlaceCard = ({ name, rating, url, rank }) => {
+const PlaceCard = ({ name, rating, numRatings, url, rank }) => {
     let borderColor;
 
     switch (rank) {
@@ -47,7 +49,7 @@ const PlaceCard = ({ name, rating, url, rank }) => {
         >
             <VStack>
                 <Name name={name} />
-                <Rating score={rating}/>
+                <Rating score={rating} numRatings={numRatings}/>
             </VStack>
         </Box>
     );
