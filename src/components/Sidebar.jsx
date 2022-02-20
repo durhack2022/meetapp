@@ -28,11 +28,17 @@ const ClearMarkersButton = ({ onPress }) => {
 };
 
 const ResultList = ({ items }) => {
+    console.log("items", items);
     return (
         <div overflow="scroll">
             <VStack>
                 {items.map((item, i) => {
-                    return <PlaceCard key={i} name={item["name"]}/>
+                    return <PlaceCard key={i}
+                                name={item["name"]}
+                                rating={item["rating"]}
+                                url={item["page_url"]}
+                                rank={i}
+                            />
                 })}
             </VStack>
         </div>
@@ -44,7 +50,12 @@ const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers }) => {
         <Container padding={5}>
             <SearchInput placeholder={placeholder} onSubmit={onSubmit} />
             <Spacer height={"10px"}/>
-            <ClearMarkersButton onPress={onClearMarkers}/>
+            <ClearMarkersButton onPress={onClearMarkers} 
+                style={{
+                    position: "absolute",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}/>
             <LineSpacer padding={"20px"}/>
             <ResultList items={placeResults}/>
         </Container>);

@@ -40,6 +40,8 @@ const Body = ({
         const res = await fetch(url);
         const body = await res.json();
 
+        console.log("result:", body[0]);
+
         setPlaces(body[0]);
     };
 
@@ -61,6 +63,7 @@ const Body = ({
                         styleUrl={styleURL}
                         onClick={onMapClick}
                         points={markers}
+                        results={places}
                     />    
                 </GridItem>
                 <GridItem colSpan={2}>
