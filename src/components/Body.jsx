@@ -64,7 +64,7 @@ const Body = ({
                     />    
                 </GridItem>
                 <GridItem colSpan={2}>
-                    <Sidebar placeholder={"where do you want to go?"} 
+                    <Sidebar placeholder={"Where do you want to go?"} 
                         onSubmit={handleSubmit}
                         onClearMarkers={handleClearMarkers}
                         placeResults={places}
