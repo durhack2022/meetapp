@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-import { SimpleGrid, GridItem } from '@chakra-ui/react';
+import { Button, Grid, GridItem, VStack } from '@chakra-ui/react';
 
 import { Map } from "./Map";
+import { Sidebar } from "./Sidebar";
 
 const Body = ({
     apiKey,
@@ -10,26 +11,37 @@ const Body = ({
 }) => {
     let [markers, setMarkers] = useState([]);
 
-    let onMapClick = event => {
+    const onMapClick = event => {
         let { lat, lng } = event;        
         setMarkers((markers) =>  [...markers, {lat, lng}])
     };
+
+    const handleSubmit = searchTerm => {
+        console.log("searched for", searchTerm);
+    };
+
+    const handleClearMarkers = event => {
+        event.preventDefault();
+        setMarkers([]);
+    }
   
     return (
-        <SimpleGrid columns={2}>
-            <GridItem>
-                foobar
-            </GridItem>
-            <GridItem>
+        <Grid templateColumns={"repeat(9, 1fr)"}>
+            <GridItem colSpan={7}>
                 <Map apiKey={apiKey}
-                    styleUrl={styleURL} 
+                    styleUrl={styleURL}
                     onClick={onMapClick}
                     points={markers}
                 />    
             </GridItem>
-        </SimpleGrid>
-
-         );
+            <GridItem colSpan={2}>
+                <Sidebar placeholder={"where do you want to go?"} 
+                    onSubmit={handleSubmit}
+                    onClearMarkers={handleClearMarkers}
+                />
+            </GridItem>
+        </Grid>
+    );
 };
 
 export { Body };
