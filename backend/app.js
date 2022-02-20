@@ -154,7 +154,6 @@ async function GetOptimal(type,centroidLat,centroidLng,mode){
     let sortedByDuration=sumDuration.sort((a,b) =>  a.sum-b.sum);
     
     for (let result of sortedByDistance){
-        delete result.sum;
         let temp=jsonPlaces.find((object)=>(object.name===result.name))
         result.rating=temp.rating;
         result.user_ratings_total=temp.user_ratings_total
@@ -162,7 +161,6 @@ async function GetOptimal(type,centroidLat,centroidLng,mode){
         result.lng=temp.lng
     }
     for (let result of sortedByDuration){
-        delete result.sum;
         let temp=jsonPlaces.find((object)=>(object.name===result.name))
         result.rating=temp.rating;
         result.user_ratings_total=temp.user_ratings_total
