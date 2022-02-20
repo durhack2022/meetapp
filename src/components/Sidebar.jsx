@@ -23,30 +23,30 @@ const SearchInput = ({ placeholder, onSubmit }) => {
 
 const ClearMarkersButton = ({ onPress }) => {
     return (
-        <Button onClick={onPress}>clear markers</Button>
+        <Button onClick={onPress} bg = '#ff473a' color='white'>clear markers</Button>
     );
 };
 
-const ResultList = ({ results }) => {
+const ResultList = ({ items }) => {
     return (
         <div overflow="scroll">
             <VStack>
-                {[...Array(5).keys()].map(i => {
-                    return <PlaceCard key={i} />
+                {items.map((item, i) => {
+                    return <PlaceCard key={i} name={item["name"]}/>
                 })}
             </VStack>
         </div>
     );
 };
 
-const Sidebar = ({ placeholder, results=[], onSubmit, onClearMarkers }) => {
+const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers }) => {
     return (
         <Container padding={5}>
             <SearchInput placeholder={placeholder} onSubmit={onSubmit} />
             <Spacer height={"10px"}/>
             <ClearMarkersButton onPress={onClearMarkers}/>
             <LineSpacer padding={"20px"}/>
-            <ResultList />
+            <ResultList items={placeResults}/>
         </Container>);
 };
 

@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
 
 // https://chakra-ui.com/docs/layout/box
-const PlaceCard = ({ foo }) => {
+const PlaceCard = ({ name }) => {
     return (
-        <Box p="6" width="100%" borderWidth="1px" borderRadius="lg">
-            lolll
+        <Box p="6" width="100%" borderWidth="1px" borderRadius="lg" borderColor='#ff473a'>
+            {name}
         </Box>
     );
 };
