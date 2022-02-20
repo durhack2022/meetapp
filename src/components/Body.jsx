@@ -48,6 +48,7 @@ const Body = ({
     const handleClearMarkers = event => {
         event.preventDefault();
         setMarkers([]);
+        setPlaces([]);
     }
   
     return (
