@@ -76,7 +76,6 @@ const Map = ({ apiKey, styleURL, onClick, points }) => {
                     );
                 }
             });
-
         }
     };
 

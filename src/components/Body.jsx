@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, Grid, GridItem, VStack } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 
 import { Map } from "./Map";
 import { Sidebar } from "./Sidebar";

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-import { Container, Input, Button, Spacer } from '@chakra-ui/react';
+import { Container, Input, Button, Spacer, VStack } from '@chakra-ui/react';
+
+import { PlaceCard } from "./PlaceCard";
+import { LineSpacer } from './LineSpacer';
 
 const SearchInput = ({ placeholder, onSubmit }) => {
     const [text, setText] = useState("");
@@ -8,7 +11,6 @@ const SearchInput = ({ placeholder, onSubmit }) => {
     const handleSubmit = event => {
         event.preventDefault();
         onSubmit(text);
-        // setText("");
     }
 
     return (
@@ -25,12 +27,26 @@ const ClearMarkersButton = ({ onPress }) => {
     );
 };
 
-const Sidebar = ({ placeholder, onSubmit, onClearMarkers }) => {
+const ResultList = ({ results }) => {
+    return (
+        <div overflow="scroll">
+            <VStack>
+                {[...Array(5).keys()].map(i => {
+                    return <PlaceCard key={i} />
+                })}
+            </VStack>
+        </div>
+    );
+};
+
+const Sidebar = ({ placeholder, results=[], onSubmit, onClearMarkers }) => {
     return (
         <Container padding={5}>
             <SearchInput placeholder={placeholder} onSubmit={onSubmit} />
             <Spacer height={"10px"}/>
             <ClearMarkersButton onPress={onClearMarkers}/>
+            <LineSpacer padding={"20px"}/>
+            <ResultList />
         </Container>);
 };
 
