@@ -36,7 +36,8 @@ function filterPlaces(body,howMany) {  //exclude unnecessary attributes from the
                     lat:result.geometry.location.lat,
                     lng:result.geometry.location.lng,
                     rating:result.rating,
-                    user_ratings_total:result.user_ratings_total
+                    user_ratings_total:result.user_ratings_total,
+                    place_id:result.place_id
                 })
             }
             if (count===howMany){
@@ -159,13 +160,17 @@ async function GetOptimal(type,centroidLat,centroidLng,mode){
         result.user_ratings_total=temp.user_ratings_total
         result.lat=temp.lat;
         result.lng=temp.lng
+        result.place_id=temp.place_id
+        result.page_url=`https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${temp.place_id}`
+
     }
     for (let result of sortedByDuration){
         let temp=jsonPlaces.find((object)=>(object.name===result.name))
         result.rating=temp.rating;
         result.user_ratings_total=temp.user_ratings_total
         result.lat=temp.lat;
-        result.lng=temp.lng
+        result.lng=temp.lng;
+        result.place_id=temp.place_id
     }
 
     return [sortedByDistance,sortedByDuration]
