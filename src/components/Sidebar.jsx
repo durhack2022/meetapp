@@ -23,7 +23,7 @@ const SearchInput = ({ placeholder, onSubmit }) => {
 
 const ClearMarkersButton = ({ onPress }) => {
     return (
-        <Button onClick={onPress}>clear markers</Button>
+        <Button onClick={onPress} bg = '#ff473a' color='white'>clear markers</Button>
     );
 };
 
