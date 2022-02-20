@@ -13,8 +13,6 @@ function getCentroid(userCoordinates){
 }
 
 const encodePoints = points => {
-  console.log("encoding:", points);
-
   const COMMA = "%2C";
   const PIPE = "%7C";
   
