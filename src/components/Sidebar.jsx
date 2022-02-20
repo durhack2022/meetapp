@@ -5,6 +5,15 @@ import { Box, Container, Input, Button, Spacer, VStack, Switch, FormLabel, FormC
 import { PlaceCard } from "./PlaceCard";
 import { LineSpacer } from './LineSpacer';
 
+const LOGO_IMG = require("../assets/logo.png");
+
+const LogoInset = ({ height }) => {
+    return (
+        // eslint-disable-next-line jsx-a11y/img-redundant-alt
+        <img src={LOGO_IMG} alt={"logo image"} style={{ height: height }}/>
+    );
+};
+
 const SearchInput = ({ placeholder, onSubmit }) => {
     const [text, setText] = useState("");
     
@@ -17,7 +26,6 @@ const SearchInput = ({ placeholder, onSubmit }) => {
         <form onSubmit={handleSubmit}>
             <Input placeholder={placeholder} onInput={e => setText(e.currentTarget.value)}/>
         </form>
-
     );
 };
 
@@ -72,6 +80,9 @@ const Sidebar = ({ placeholder, placeResults, onSubmit, onClearMarkers, onToggle
             </Flex>
             <LineSpacer padding={"20px"}/>
             <ResultList items={placeResults}/>
+            <Box style={{marginLeft: "10vh", marginBottom: "2vh", position: "fixed", bottom: 0}}>
+                <LogoInset height={"20vh"}/>
+            </Box>
         </Container>);
 };
 

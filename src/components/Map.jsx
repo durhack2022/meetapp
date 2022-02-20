@@ -18,7 +18,7 @@ const getLocation = callback => {
 };
 
 const Marker = props => {
-    let width = props.largePerson ? "min(5vh,5vw)" : "min(3vh,5vw)";
+    let width = props.largePerson ? "min(6vh,6vw)" : "min(3vh,5vw)";
 
     return (
         <img src={MARKER_IMG} style={{ width }} alt={"marker"}/>
@@ -119,18 +119,18 @@ const Map = ({ apiKey, styleURL, onClick, largePerson, points, results }) => {
                 onGoogleApiLoaded={({ map }) => apiIsLoaded(map)}
                 options={mapOptions}
             >
-                {points.map((point, i) => 
-                    <Marker key={i} lat={point.lat} lng={point.lng} zoom={map.current.zoom} largePerson={largePerson}/>)
-                }
-
                 {results.map((point, i) => 
                     <ResultMarker key={i} rank={i} lat={point.lat} lng={point.lng} zoom={map.current.zoom}/>)
+                }
+
+                {points.map((point, i) => 
+                    <Marker key={i} lat={point.lat} lng={point.lng} zoom={map.current.zoom} largePerson={largePerson}/>)
                 }
 
                 <UserMarker lat={mapPos.center.lat} lng={mapPos.center.lng}/>
             </GoogleMapReact>
         </div>
-    );;
-}
+    );
+};
 
 export { Map };
