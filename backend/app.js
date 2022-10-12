@@ -13,7 +13,7 @@ const API_KEY="AIzaSyCBkw_uhBVIOIqek8TbGZXex8pszTc8Qnk";
 app.use(express.json());
 app.use(express.urlencoded());
 
-const SEARCH_RADIUS=1000;   //radius of search area around the centroid
+const SEARCH_RADIUS=5000;   //radius of search area around the centroid
 const HOW_MANY=5;   //how many results to aggregate
 
 async function GetNearbyPlaces(type,lat,lng,radius){
@@ -77,6 +77,7 @@ async function GetDistancesToPlaces(type,lat,lng,originList,mode){
 
   
     let body=await GetNearbyPlaces(type,lat,lng,SEARCH_RADIUS);
+    console.log(body)
     if (body.length===0){
         return null
     }
@@ -106,23 +107,6 @@ async function GetDistancesToPlaces(type,lat,lng,originList,mode){
 
 }
 
-// app.get('/getDistancesToPlaces', async(req,res)=>{
-//     let type=req.query.type;
-//     let lat=req.query.lat;
-//     let lng=req.query.lng;
-//     let originsListFormatted=req.query.originsList;
-//     let mode=req.query.mode;
-//     let originsList=[];
-//     for (let origin of originsListFormatted.split("|")){
-//         let lat=parseFloat(origin.split(",")[0])
-//         let lng=parseFloat(origin.split(",")[1])
-//         originsList.push([lat,lng])
-//     }
-//     let body=await GetDistancesToPlaces(type,lat,lng,originsList,mode);
-//     res.send(body);
-    
-// })
-
 async function GetOptimal(type,centroidLat,centroidLng,mode){
     
     let body=await GetNearbyPlaces(type,centroidLat,centroidLng,SEARCH_RADIUS);
@@ -132,6 +116,7 @@ async function GetOptimal(type,centroidLat,centroidLng,mode){
     let jsonPlaces=filterPlaces(body,HOW_MANY);
 
     body=await GetDistancesToPlaces(type,centroidLat,centroidLng,originsList,mode);
+    console.log()
     let sumDistance=[]
     let sumDuration=[]
     for (let origin of body[0]){
