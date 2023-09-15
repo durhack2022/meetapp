@@ -8,8 +8,8 @@ app.use(cors());
 
 const path = require("path");
 const fetch=require("node-fetch");
-const API_KEY="AIzaSyCBkw_uhBVIOIqek8TbGZXex8pszTc8Qnk";
-
+//const API_KEY="AIzaSyCBkw_uhBVIOIqek8TbGZXex8pszTc8Qnk";
+const API_KEY="AIzaSyBHydWSWKqNfjto6AytrqLePU3yFeZAD08";
 app.use(express.json());
 app.use(express.urlencoded());
 
