@@ -2,16 +2,21 @@ import express from "express";
 const app = express();
 const port = 3080;
 import * as dotenv from 'dotenv';
-dotenv.config();
+
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: resolve(__dirname, '../.env') });
 import cors from "cors";
 
 app.use(cors());
 
-const path = import("path");
 import fetch from "node-fetch";
-import { Console } from "console";
 
-const API_KEY=process.env.GOOGLE_API_KEY;
+const API_KEY=process.env.REACT_APP_GOOGLE_API_KEY;
 console.log("api key:",API_KEY);
 app.use(express.json());
 app.use(express.urlencoded());
