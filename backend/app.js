@@ -1,15 +1,18 @@
-const express = require('express');
+import express from "express";
 const app = express();
 const port = 3080;
-
-var cors = require('cors');
+import * as dotenv from 'dotenv';
+dotenv.config();
+import cors from "cors";
 
 app.use(cors());
 
-const path = require("path");
-const fetch=require("node-fetch");
-//const API_KEY="AIzaSyCBkw_uhBVIOIqek8TbGZXex8pszTc8Qnk";
-const API_KEY="AIzaSyBHydWSWKqNfjto6AytrqLePU3yFeZAD08";
+const path = import("path");
+import fetch from "node-fetch";
+import { Console } from "console";
+
+const API_KEY=process.env.GOOGLE_API_KEY;
+console.log("api key:",API_KEY);
 app.use(express.json());
 app.use(express.urlencoded());
 

@@ -4,16 +4,16 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 import { Body } from "./components/Body";
 
-// TODO: store on the backend
-const MAP_API_KEY = "AIzaSyCBkw_uhBVIOIqek8TbGZXex8pszTc8Qnk"   // process.env.GOOGLE_MAPS_API_KEY
-const MAP_STYLE_URL = "wwwwwww"                                 // process.env.MAP_STYLE_URL;
-
+const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+const MAP_STYLE_URL = process.env.REACT_APP_MAP_STYLE_URL;          
 const base_style = {
   backgroundColor: "white",
   fontFamily: "Arial",
 };
 
 const App = () => {
+  console.log("asdadadsasdada");
+  console.log(MAP_API_KEY);
   return (
     <ChakraProvider>
         <div style={base_style}>
